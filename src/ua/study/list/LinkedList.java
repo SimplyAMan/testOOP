@@ -11,17 +11,16 @@ public class LinkedList implements List, Iterable {
     }
 
     private class MyIterator implements Iterator{
-        private int index = size;
+        private int count = 0;
         @Override
         public boolean hasNext() {
-            return size != 0;
+            return count != size;
         }
 
         @Override
         public Object next() {
-            size--;
-            // TODO: 10/9/2018
-            return null;
+            count++;
+            return get(count-1);
         }
     }
 
@@ -39,75 +38,37 @@ public class LinkedList implements List, Iterable {
     private Node tail;
     private int size;
 
-
-
     @Override
     public void add(Object value) {
-        Node newNode = new Node(value);
-        if(size == 0) {
-            tail = newNode;
-            head = newNode;
-        } else {
-            newNode.previous = tail;
-            tail.next = newNode;
-            tail = newNode;
-        }
-        size++;
+        add(value,size);
     }
 
     @Override
     public void add(Object value, int index) {
         if (index > size) {
             throw new IndexOutOfBoundsException();
-        } else {
-            // between two existed elements
-            Node newNode = new Node(value);
-            // add element at the end of list
-            if (index == size) {
-                newNode.previous = getNodeByIndex(index - 1);
-                tail = newNode;
-            } else {
-                Node switchedNode = getNodeByIndex(index);
-                newNode.previous = switchedNode.previous;
-                newNode.next = switchedNode;
-                switchedNode.previous = newNode;
-            }
-            if (index != 0) {
-                newNode.previous.next = newNode;
-            } else {
-                head = newNode;
-            }
-
-/*
-            Node newNode = new Node(value);
-            if (index == 0 && size == 0) {
-                head = tail = newNode;
-            } else {
-                if (index == 0) {
-                    newNode.next = head;
-                    head.previous = newNode;
-                    head = newNode;
-                } else if (index == size) {
-                    Node nextNode = getNodeByIndex(index - 1);
-                    newNode.previous = nextNode;
-                    nextNode.next = newNode;
-                } else {
-                    Node nextNode = getNodeByIndex(index);
-                    newNode.next = nextNode;
-                    newNode.previous = nextNode.previous;
-                    nextNode.previous = newNode;
-
-                }
-            }*/
-
-            size++;
         }
+        Node newNode = new Node(value);
+        if (index == size) {
+            newNode.previous = getNodeByIndex(index - 1);
+            tail = newNode;
+        } else {
+            Node shiftedNode = getNodeByIndex(index);
+            newNode.previous = shiftedNode.previous;
+            newNode.next = shiftedNode;
+            shiftedNode.previous = newNode;
+        }
+        if (index == 0) {
+            head = newNode;
+        } else {
+            newNode.previous.next = newNode;
+        }
+        size++;
     }
 
     @Override
     public Object remove(int index) {
         Node deletedNode = getNodeByIndex(index);
-        Node tempNode = deletedNode;
         if (index == 0) {
             head = deletedNode.next;
         } else if(index == size - 1) {
@@ -115,22 +76,13 @@ public class LinkedList implements List, Iterable {
         } else {
                 deletedNode.next.previous = deletedNode.previous;
                 deletedNode.previous.next = deletedNode.next;
-//            deletedNode.next.previous = tempNode.previous;
             }
-        /*if (index > 0) {
-            deletedNode.previous.next = tempNode.next;
-        } else {
-            head = deletedNode.next;
-        }*/
         size--;
-        //getNodeByIndex(size-1).next = null;
         return deletedNode.value;
     }
 
     private Node getNodeByIndex(int index) {
-        if(index>=size) {
-            throw new ArrayIndexOutOfBoundsException();
-        }
+        checkIfIndexOutOfBound(index);
         Node currentNode = head;
         for (int i = 1; i < index + 1; i++) {
             currentNode = currentNode.next;
@@ -139,17 +91,18 @@ public class LinkedList implements List, Iterable {
     }
     @Override
     public Object get(int index) {
-        if (index > size) {
+        return getNodeByIndex(index).value;
+    }
+
+    private void checkIfIndexOutOfBound(int index) {
+        if (index >= size) {
             throw new IndexOutOfBoundsException();
         }
-        return getNodeByIndex(index).value;
     }
 
     @Override
     public Object set(Object value, int index) {
-        if (index >= size) {
-            throw new IndexOutOfBoundsException();
-        }
+        checkIfIndexOutOfBound(index);
         Node prevNode = getNodeByIndex(index);
         Object result = prevNode.value;
         prevNode.value = value;
@@ -170,7 +123,7 @@ public class LinkedList implements List, Iterable {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     @Override
@@ -201,5 +154,18 @@ public class LinkedList implements List, Iterable {
             currentNode = currentNode.next;
         }
         return index;
+    }
+
+    public static void main(String[] args) {
+        LinkedList arrayList = new LinkedList();
+        arrayList.add(1);
+        arrayList.add("A");
+        arrayList.add("B");
+        arrayList.add(1.2);
+        arrayList.add(null);
+        arrayList.add(-1);
+        for (Object var: arrayList) {
+            System.out.println(var);
+        }
     }
 }
