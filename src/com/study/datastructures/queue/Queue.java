@@ -1,4 +1,4 @@
-package ua.study.queue;
+package com.study.datastructures.queue;
 
 public interface Queue {
     void enqueue(Object value);

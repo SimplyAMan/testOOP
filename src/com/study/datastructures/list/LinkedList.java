@@ -1,54 +1,72 @@
-package ua.study.list;
+package com.study.datastructures.list;
+
+import com.study.datastructures.list.List;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
-public class LinkedList implements List, Iterable {
+public class LinkedList<E> implements List<E>, Iterable {
+
+    private Node<E> head;
+    private Node<E> tail;
+    private int size;
+
+    private static class Node<E> { // remove static
+        E value;
+        Node<E> next;
+
+        Node<E> previous;
+
+        private Node(E value) {
+            this.value = value;
+        }
+
+    }
+
+    public E max(Comparator comparator) {
+        Node<E> currentNode = head;
+        Node<E> node = currentNode;
+        for (int i = 0; i < size; i++) {
+            if(comparator.compare(currentNode.value, node.value) < 0) {
+                currentNode = node;
+            }
+            node = node.next;
+        }
+        return currentNode.value;
+    }
 
     @Override
     public Iterator iterator() {
         return new MyIterator();
     }
 
-    private class MyIterator implements Iterator{
+    private class MyIterator implements Iterator {
+
         private int count = 0;
+
         @Override
         public boolean hasNext() {
             return count != size;
         }
 
         @Override
-        public Object next() {
+        public E next() {
             count++;
-            return get(count-1);
+            return get(count - 1);
         }
-    }
 
-    private static class Node {
-        Object value;
-        Node next;
-        Node previous;
-
-        private Node(Object value) {
-            this.value = value;
-        }
-    }
-
-    private Node head;
-    private Node tail;
-    private int size;
-
-    @Override
-    public void add(Object value) {
-        add(value,size);
     }
 
     @Override
-    public void add(Object value, int index) {
+    public void add(E value) {
+        add(value, size);
+    }
+
+    @Override
+    public void add(E value, int index) {
         if (index > size) {
             throw new IndexOutOfBoundsException();
         }
-        Node newNode = new Node(value);
+        Node<E> newNode = new Node(value);
         if (index == size) {
             newNode.previous = getNodeByIndex(index - 1);
             tail = newNode;
@@ -67,30 +85,31 @@ public class LinkedList implements List, Iterable {
     }
 
     @Override
-    public Object remove(int index) {
-        Node deletedNode = getNodeByIndex(index);
+    public E remove(int index) {
+        Node<E> deletedNode = getNodeByIndex(index);
         if (index == 0) {
             head = deletedNode.next;
-        } else if(index == size - 1) {
+        } else if (index == size - 1) {
             tail = deletedNode.previous;
         } else {
-                deletedNode.next.previous = deletedNode.previous;
-                deletedNode.previous.next = deletedNode.next;
-            }
+            deletedNode.next.previous = deletedNode.previous;
+            deletedNode.previous.next = deletedNode.next;
+        }
         size--;
         return deletedNode.value;
     }
 
-    private Node getNodeByIndex(int index) {
+    private Node<E> getNodeByIndex(int index) {
         checkIfIndexOutOfBound(index);
-        Node currentNode = head;
+        Node<E> currentNode = head;
         for (int i = 1; i < index + 1; i++) {
             currentNode = currentNode.next;
         }
         return currentNode;
     }
+
     @Override
-    public Object get(int index) {
+    public E get(int index) {
         return getNodeByIndex(index).value;
     }
 
@@ -101,10 +120,10 @@ public class LinkedList implements List, Iterable {
     }
 
     @Override
-    public Object set(Object value, int index) {
+    public E set(E value, int index) {
         checkIfIndexOutOfBound(index);
-        Node prevNode = getNodeByIndex(index);
-        Object result = prevNode.value;
+        Node<E> prevNode = getNodeByIndex(index);
+        E result = prevNode.value;
         prevNode.value = value;
         return result;
     }
@@ -127,15 +146,15 @@ public class LinkedList implements List, Iterable {
     }
 
     @Override
-    public boolean contains(Object value) {
+    public boolean contains(E value) {
         return indexOf(value) != -1;
     }
 
     @Override
-    public int indexOf(Object value) {
-        Node currentNode = head;
-        for(int i = 0; i < size; i++) {
-            if(currentNode.value == value) {
+    public int indexOf(E value) {
+        Node<E> currentNode = head;
+        for (int i = 0; i < size; i++) {
+            if (currentNode.value == value) {
                 return i;
             }
             currentNode = currentNode.next;
@@ -144,11 +163,11 @@ public class LinkedList implements List, Iterable {
     }
 
     @Override
-    public int lastIndexOf(Object value) {
+    public int lastIndexOf(E value) {
         int index = -1;
-        Node currentNode = head;
-        for(int i = 0; i < size; i++) {
-            if(currentNode.value == value) {
+        Node<E> currentNode = head;
+        for (int i = 0; i < size; i++) {
+            if (currentNode.value == value) {
                 index = i;
             }
             currentNode = currentNode.next;
@@ -156,7 +175,7 @@ public class LinkedList implements List, Iterable {
         return index;
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         LinkedList arrayList = new LinkedList();
         arrayList.add(1);
         arrayList.add("A");
@@ -164,8 +183,8 @@ public class LinkedList implements List, Iterable {
         arrayList.add(1.2);
         arrayList.add(null);
         arrayList.add(-1);
-        for (Object var: arrayList) {
+        for (E var: arrayList) {
             System.out.println(var);
         }
-    }
+    }*/
 }

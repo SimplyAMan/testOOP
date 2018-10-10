@@ -1,5 +1,6 @@
-package ua.study.list;
+package com.study.datastructures.list;
 
+import com.study.datastructures.list.LinkedList;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 
 
 public class LinkedListTest {
-    LinkedList arrayWithData;
+    LinkedList<String> arrayWithData;
 
     @Before
     public void before() {
@@ -25,7 +26,7 @@ public class LinkedListTest {
         arrayWithData.clear();
         assertEquals(arrayWithData.size(), 0);
 
-        arrayWithData.add("one");
+        arrayWithData.add("1");
         assertEquals(arrayWithData.get(0), "one");
         assertEquals(arrayWithData.size(), 1);
     }

@@ -1,4 +1,4 @@
-package ua.study.queue;
+package com.study.datastructures.queue;
 
 // FIFO
 public class ArrayQueue {

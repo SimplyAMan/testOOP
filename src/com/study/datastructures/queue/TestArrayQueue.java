@@ -1,6 +1,4 @@
-package ua.study.queue;
-
-import ua.study.queue.ArrayQueue;
+package com.study.datastructures.queue;
 
 /**
  * Created by dsk2 on 10/8/2018.

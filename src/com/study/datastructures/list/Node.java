@@ -1,12 +1,12 @@
-package ua.study.queue;
+package com.study.datastructures.list;
 
 /**
  * Created by dsk2 on 10/9/2018.
  */
 public class Node {
     Object value;
-//    ua.study.queue.Node prev;
     Node next;
+    Node previous;
 
     public Node(Object value) {
         this.value = value;

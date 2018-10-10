@@ -1,4 +1,4 @@
-package ua.study.list;
+package com.study.datastructures.list;
 
 public class ArrayList implements List {
 

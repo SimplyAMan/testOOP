@@ -1,7 +1,4 @@
-package ua.study.list;
-
-import ua.study.list.ArrayList;
-import ua.study.list.List;
+package com.study.datastructures.list;
 
 /**
  * Created by dsk2 on 10/8/2018.

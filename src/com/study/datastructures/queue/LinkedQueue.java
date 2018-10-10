@@ -1,6 +1,4 @@
-package ua.study.queue;
-
-import ua.study.queue.Node;
+package com.study.datastructures.queue;
 
 import java.util.StringJoiner;
 
