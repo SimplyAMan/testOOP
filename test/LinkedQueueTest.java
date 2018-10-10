@@ -1,8 +1,7 @@
+import com.study.datastructures.queue.LinkedQueue;
 import org.junit.Test;
-import ua.study.queue.LinkedQueue;
 
 import static org.junit.Assert.*;
-
 /**
  * Created by dsk2 on 10/9/2018.
  */
