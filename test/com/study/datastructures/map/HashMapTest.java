@@ -27,15 +27,6 @@ public class HashMapTest {
     }
 
     @Test
-    public void testPutHundredValues() {
-        for (int i = 0; i < 100; i++) {
-            testMap.put(Integer.toString(i), i);
-        }
-
-        assertEquals(100, testMap.size());
-    }
-
-    @Test
     public void testPutNull() throws Exception {
         testMap.put("Andy",22);
         testMap.put("Anna",null);
@@ -95,5 +86,14 @@ public class HashMapTest {
     public void containsKeyWithNull() throws Exception {
         testMap.put("Andy",null);
         assertEquals(true, testMap.containsKey("Andy"));
+    }
+
+    @Test
+    public void testPutHundredValues() {
+        for (int i = 0; i < 100; i++) {
+            testMap.put(Integer.toString(i), i);
+        }
+
+        assertEquals(100, testMap.size());
     }
 }

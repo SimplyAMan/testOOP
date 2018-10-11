@@ -23,7 +23,7 @@ public class FileManagerTest {
     public void finish() {
 //        file.delete();
     }
-
+/*
     @org.junit.Test
     public void testTempDirExists() throws Exception {
         assertEquals(true, file.exists());
@@ -63,5 +63,5 @@ public class FileManagerTest {
         emptyDir();
         assertEquals(0, FileManager.countDirs(path));
     }
-
+*/
 }
